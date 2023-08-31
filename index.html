@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script type='text/javascript' src='knockout-3.5.1.js'></script>
+    <meta charset="UTF-8">
+    <title>Выпадающий список</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div id="root" >
+        <div id="items" data-bind='template: { name: "itemTmp", foreach: items }'></div>
+
+        <script id="itemTmp" type="text/html">
+            <div class="dropzone" data-bind="
+            css: {'dragover': $parent.overedCategoryId() == id(), 'dragging': $parent.dragCategoryId() == id()}, 
+            attr: {draggable: $parent.dragEnabled}, 
+            event: {
+                dragstart: $parent.ondragstart,
+                dragenter: $parent.ondragenter,
+                drop: $parent.ondrop,
+                dragend: $parent.ondragend,
+            }" 
+            >
+                <div class="content">
+                    <svg class="closedList" width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg" data-bind="css: {openedList: catIsOpen}, click: switchVisibility">
+                        <circle cx="11" cy="11" r="10.5" fill="white" stroke="#D3D8DF"/>
+                        <path d="M10.5398 8.19399C10.2813 8.45261 10.2813 8.87192 10.5398 9.13055L13.87 12.4624C14.1285 12.721 14.5476 12.721 14.8061 12.4624C15.0646 12.2037 15.0646 11.7844 14.8061 11.5258L11.4759 8.19399C11.2174 7.93536 10.7983 7.93536 10.5398 8.19399Z" fill="#0066FF"/>
+                        <path d="M11.4706 8.19399C11.7291 8.45261 11.7291 8.87192 11.4706 9.13055L8.12999 12.4727C7.87149 12.7313 7.45238 12.7313 7.19388 12.4727C6.93537 12.2141 6.93537 11.7948 7.19388 11.5362L10.5345 8.19399C10.793 7.93536 11.2121 7.93536 11.4706 8.19399Z" fill="#0066FF"/>
+                    </svg>
+
+                    <div class="header" unselectable="on" data-bind='text: text'></div>
+
+                    <svg class="dragButoon" data-bind="event: {mouseover: $parent.onhoverdragbtn, mouseleave: $parent.disableDrag }" width="8" height="16" viewBox="0 0 8 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M4.69594 14.7086C4.30473 15.0991 3.67045 15.0991 3.27924 14.7086L0.293409 11.7296C-0.097803 11.339 -0.0978031 10.7059 0.293409 10.3153C0.684621 9.92482 1.3189 9.92482 1.71011 10.3153L4.69594 13.2944C5.08715 13.6849 5.08715 14.318 4.69594 14.7086Z" fill="#8E9CBB"/>
+                        <path d="M3.30385 14.7086C3.69506 15.0991 4.32934 15.0991 4.72055 14.7086L7.70659 11.7296C8.0978 11.339 8.0978 10.7059 7.70659 10.3153C7.31538 9.92482 6.6811 9.92482 6.28989 10.3153L3.30385 13.2944C2.91264 13.6849 2.91264 14.318 3.30385 14.7086Z" fill="#8E9CBB"/>
+                        <path d="M3.98759 14.0157C3.43433 14.0157 2.98583 13.5679 2.98583 13.0157V3C2.98583 2.44772 3.43433 2 3.98759 2C4.54085 2 4.98935 2.44772 4.98935 3V13.0157C4.98935 13.5679 4.54085 14.0157 3.98759 14.0157Z" fill="#8E9CBB"/>
+                        <path d="M4.69594 0.292893C4.30473 -0.0976311 3.67045 -0.0976311 3.27924 0.292893L0.293409 3.27191C-0.097803 3.66243 -0.0978031 4.2956 0.293409 4.68612C0.684621 5.07664 1.3189 5.07664 1.71011 4.68612L4.69594 1.70711C5.08715 1.31658 5.08715 0.683417 4.69594 0.292893Z" fill="#8E9CBB"/>
+                        <path d="M3.30385 0.292893C3.69506 -0.0976311 4.32934 -0.0976311 4.72055 0.292893L7.70659 3.27191C8.0978 3.66243 8.0978 4.2956 7.70659 4.68612C7.31538 5.07664 6.6811 5.07664 6.28989 4.68612L3.30385 1.70711C2.91264 1.31658 2.91264 0.683417 3.30385 0.292893Z" fill="#8E9CBB"/>
+                    </svg>            
+                </div>
+
+                <ul id="categoryItems" class="items" data-bind='css: {visible: catIsOpen}, template: { name: "categoryItemsTmp", foreach: dataList }'></ul>
+
+            </div>
+        </script>
+
+        <script id="categoryItemsTmp" type="text/html">
+            <li class="item" data-bind='text: text'></li>
+        </script>
+    </div>
+    <script type='text/javascript' src="./app.js"></script>
+</body>
+
+</html>
